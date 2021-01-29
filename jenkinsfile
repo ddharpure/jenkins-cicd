@@ -1,0 +1,27 @@
+pipeline {
+	agent any {
+		stages {
+			stage("START") {
+				echo 'Starting Pipeline'
+			}
+			
+			stage("Build Application") {
+				steps {
+					sh 'mvn clean install'
+				}
+			}
+			
+			stage("Deploy Application") {
+				steps {
+					sh 'mvn package deploy -DmuleDeploy'
+				}
+			}
+			
+			stage("Perform Regression Testing") {
+				steps {
+					sh 'newman run /Users/Dev/Documents/MyWorkSpace/first-mule-test.postman_collection.json'
+				}
+			}
+		}
+	}
+}
