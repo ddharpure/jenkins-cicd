@@ -8,6 +8,12 @@ pipeline {
 				}
 			}
 			
+			stage("MUnit Test Application") {
+				steps {
+					sh 'mvn test'
+				}
+			}
+			
 			stage("Deploy Application") {
 				steps {
 					sh 'mvn package deploy -DmuleDeploy -DskipTests -Dusername=devendralearn2 -Dpassword=Cybage@123 -Dapp.runtime=4.3.0 -Dcloudhub.application.name=jenkins-cicd -Denvironment=Sandbox -Dregion=us-east-1 -Dworkers=1 -DworkerType=MICRO'
